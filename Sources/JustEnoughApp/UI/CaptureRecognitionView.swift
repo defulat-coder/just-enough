@@ -69,6 +69,8 @@ struct RecognitionReviewView: View {
                         .lineSpacing(4)
                         .padding(.top, 16)
 
+                    RecognitionTrace()
+
                     Image("salad-photo")
                         .resizable()
                         .scaledToFill()
@@ -98,5 +100,28 @@ struct RecognitionReviewView: View {
             }
         }
         .premiumPage()
+    }
+}
+
+private struct RecognitionTrace: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 9) {
+            Text("Agent analysis")
+                .tinyCaps()
+            HStack(spacing: 7) {
+                tracePill("vision")
+                tracePill("memory")
+                tracePill("nutrition DB")
+            }
+        }
+    }
+
+    private func tracePill(_ label: String) -> some View {
+        Text(label)
+            .font(.system(size: 11, weight: .bold, design: .rounded))
+            .foregroundStyle(JustEnoughDesign.secondaryInk)
+            .padding(.horizontal, 10)
+            .frame(height: 27)
+            .background(.ultraThinMaterial, in: Capsule())
     }
 }

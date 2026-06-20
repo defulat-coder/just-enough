@@ -32,6 +32,7 @@ struct FoodDetailView: View {
                     FoodImage(visual: entry.visual, hero: true)
                         .frame(height: 275)
                     nutritionBlock
+                    estimateSourceBlock
                     editBlock
                     rationaleBlock
                 }
@@ -90,6 +91,25 @@ struct FoodDetailView: View {
             .background(JustEnoughDesign.accent, in: Capsule())
             .accessibilityIdentifier("SaveCalorieAdjustment")
         }
+    }
+
+    private var estimateSourceBlock: some View {
+        HStack(spacing: 8) {
+            sourcePill(entry.estimate.source)
+            sourcePill("\(Int(entry.estimate.confidence * 100))% confidence")
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    private func sourcePill(_ text: String) -> some View {
+        Text(text)
+            .font(.system(size: 12, weight: .bold, design: .rounded))
+            .lineLimit(1)
+            .minimumScaleFactor(0.72)
+            .foregroundStyle(JustEnoughDesign.secondaryInk)
+            .padding(.horizontal, 12)
+            .frame(height: 32)
+            .background(.ultraThinMaterial, in: Capsule())
     }
 
     private var rationaleBlock: some View {

@@ -29,7 +29,7 @@ struct TimelineCatalogView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Every meal, pulled back into a quiet catalog.")
                 .editorialTitle(34)
-            Text("\(store.totalLoggedCalories.formatted()) kcal logged across \(store.days.count) days")
+            Text("Zoomed out from \(store.days.count) agent threads · \(store.totalLoggedCalories.formatted()) kcal logged")
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
         }
@@ -41,7 +41,12 @@ struct TimelineCatalogView: View {
             Button {
                 store.showDay(day)
             } label: {
-                DayStatHeader(day: day)
+                VStack(alignment: .leading, spacing: 8) {
+                    DayStatHeader(day: day)
+                    Text("Open \(day.title.lowercased()) thread")
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                        .foregroundStyle(JustEnoughDesign.secondaryInk)
+                }
             }
             .buttonStyle(.plain)
 

@@ -25,17 +25,26 @@ This log tracks the requested repeated loop: read the original X source, inspect
 - Adjustment: added a compact tool trace above inline meal results: `memory`, `nutrition DB`, and generated food count.
 - Evidence: simulator screenshot shows `memory`, `nutrition DB`, and `4 foods` above generated meal rows.
 
-## Round 4 - Pending
+## Round 4 - Capture Recognition Trace
 
-Focus: capture and recognition should show analysis/tool progress instead of a static result jump.
+- Source pressure: photo input should feel like an agent using tools, not a static canned result.
+- Gap: recognition jumped from captured photo to final result with no visible analysis.
+- Adjustment: added `Agent analysis` chips for `vision`, `memory`, and `nutrition DB` on the recognition review screen.
+- Evidence: pending simulator capture flow screenshot.
 
-## Round 5 - Pending
+## Round 5 - Estimate Source In Detail
 
-Focus: detail screen should better expose source, confidence, and editable estimate without feeling technical.
+- Source pressure: tracker must actually work, and estimates need trust without clutter.
+- Gap: detail had rationale text, but source/confidence were buried below the edit control.
+- Adjustment: added source/confidence pills directly under the primary calorie readout.
+- Evidence: pending detail screenshot.
 
-## Round 6 - Pending
+## Round 6 - Timeline As Zoomed-Out Threads
 
-Focus: timeline should feel more like zooming out from a thread, not a separate page.
+- Source pressure: the timeline should feel like zooming out from day threads.
+- Gap: catalog did not explicitly connect itself back to the conversation model.
+- Adjustment: timeline header now says it is zoomed out from agent threads, and each day section exposes an `Open thread` action.
+- Evidence: pending timeline screenshot.
 
 ## Round 7 - Pending
 
