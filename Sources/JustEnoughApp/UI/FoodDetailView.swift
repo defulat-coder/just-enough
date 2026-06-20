@@ -2,8 +2,8 @@ import SwiftUI
 
 struct FoodDetailView: View {
     @Bindable var store: JournalStore
-    @State private var calories: Double
     let entry: FoodEntry
+    @State private var calories: Double
 
     init(store: JournalStore, entry: FoodEntry) {
         self.store = store
@@ -23,13 +23,13 @@ struct FoodDetailView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 22) {
                     Color.clear.frame(height: 16)
-                    titleBlock
+                    FoodDetailTitleSection(entry: entry)
                     FoodImage(visual: entry.visual, hero: true)
                         .frame(height: 275)
-                    nutritionBlock
-                    estimateSourceBlock
-                    editBlock
-                    rationaleBlock
+                    FoodDetailNutritionSection(entry: entry, calories: calories)
+                    FoodDetailEstimateSourceSection(estimate: entry.estimate)
+                    CalorieAdjustmentSection(calories: $calories, saveAction: saveCalories)
+                    FoodDetailRationaleSection(estimate: entry.estimate)
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 42)
@@ -40,7 +40,15 @@ struct FoodDetailView: View {
         .presentationDragIndicator(.visible)
     }
 
-    private var titleBlock: some View {
+    private func saveCalories() {
+        store.updateSelectedEntryCalories(Int(calories))
+    }
+}
+
+private struct FoodDetailTitleSection: View {
+    let entry: FoodEntry
+
+    var body: some View {
         VStack(spacing: 7) {
             Text(entry.name)
                 .editorialTitle(34)
@@ -50,8 +58,13 @@ struct FoodDetailView: View {
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
         }
     }
+}
 
-    private var nutritionBlock: some View {
+private struct FoodDetailNutritionSection: View {
+    let entry: FoodEntry
+    let calories: Double
+
+    var body: some View {
         VStack(spacing: 10) {
             HStack(alignment: .lastTextBaseline, spacing: 6) {
                 Text(Int(calories).formatted())
@@ -62,8 +75,13 @@ struct FoodDetailView: View {
             MacroStrip(macros: entry.estimate.macros)
         }
     }
+}
 
-    private var editBlock: some View {
+private struct CalorieAdjustmentSection: View {
+    @Binding var calories: Double
+    let saveAction: () -> Void
+
+    var body: some View {
         VStack(alignment: .center, spacing: 10) {
             Text("调整估算")
                 .font(.system(size: 13, weight: .bold, design: .rounded))
@@ -76,9 +94,7 @@ struct FoodDetailView: View {
             } maximumValueLabel: {
                 Text("1200")
             }
-            Button("保存热量调整") {
-                store.updateSelectedEntryCalories(Int(calories))
-            }
+            Button("保存热量调整", action: saveAction)
             .font(.system(size: 15, weight: .bold, design: .rounded))
             .foregroundStyle(.white)
             .frame(maxWidth: 260)
@@ -89,16 +105,24 @@ struct FoodDetailView: View {
         }
         .frame(maxWidth: .infinity)
     }
+}
 
-    private var estimateSourceBlock: some View {
+private struct FoodDetailEstimateSourceSection: View {
+    let estimate: NutritionEstimate
+
+    var body: some View {
         HStack(spacing: 8) {
-            sourcePill(entry.estimate.source)
-            sourcePill("\(Int(entry.estimate.confidence * 100))% 置信度")
+            FoodDetailSourcePill(text: estimate.source)
+            FoodDetailSourcePill(text: "\(Int(estimate.confidence * 100))% 置信度")
         }
         .frame(maxWidth: .infinity, alignment: .center)
     }
+}
 
-    private func sourcePill(_ text: String) -> some View {
+private struct FoodDetailSourcePill: View {
+    let text: String
+
+    var body: some View {
         Text(text)
             .font(.system(size: 12, weight: .bold, design: .rounded))
             .lineLimit(1)
@@ -108,19 +132,23 @@ struct FoodDetailView: View {
             .frame(height: 32)
             .background(.ultraThinMaterial, in: Capsule())
     }
+}
 
-    private var rationaleBlock: some View {
+private struct FoodDetailRationaleSection: View {
+    let estimate: NutritionEstimate
+
+    var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("智能体判断依据")
                 .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
                 .frame(maxWidth: .infinity, alignment: .center)
-            Text(entry.estimate.rationale)
+            Text(estimate.rationale)
                 .font(.system(size: 17, weight: .regular, design: .rounded))
                 .lineSpacing(4)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .center)
-            Text("来源：\(entry.estimate.source) · \(Int(entry.estimate.confidence * 100))% 置信度")
+            Text("来源：\(estimate.source) · \(Int(estimate.confidence * 100))% 置信度")
                 .font(.system(size: 12, weight: .bold, design: .rounded))
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
                 .multilineTextAlignment(.center)

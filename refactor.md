@@ -24,4 +24,13 @@
 - Expected leverage: route names and transitions now stay local to the store interface, while views express user intent.
 - Verification: passed `build_run_sim --reset-journal`, simulator screenshot check, no remaining `store.mode =` writes, `git diff --check`, and `scripts/verify_delivery.sh`.
 - Autoreview: checked that route rendering still reads `mode`, sheets still bind `selectedEntry`, and capture/timeline back actions now use store intent methods.
+- Commit: `8b676d0 Hide journal navigation mode writes`.
+
+### Step 3 - Split food detail sections into dedicated views
+
+- Candidate: `FoodDetailView` mixed page shell, section rendering, source-pill rendering, slider binding, and save action in computed `some View` helpers.
+- Change: extract title, nutrition, estimate source, calorie adjustment, source pill, and rationale sections into private view types; keep save orchestration in `FoodDetailView`.
+- Expected leverage: the detail page now reads as a stable screen composition, with section inputs explicit and the save action isolated.
+- Verification: passed `build_run_sim --reset-journal`, runtime UI snapshot opening a meal detail sheet, simulator screenshot check, `git diff --check`, and `scripts/verify_delivery.sh`.
+- Autoreview: checked that section extraction kept all original labels, image sizing, slider range/step, save accessibility identifier, source/confidence rendering, and calorie-save orchestration.
 - Commit: pending.
