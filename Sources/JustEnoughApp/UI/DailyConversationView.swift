@@ -1,0 +1,163 @@
+import SwiftUI
+
+struct DailyConversationView: View {
+    @Bindable var store: JournalStore
+
+    var body: some View {
+        VStack(spacing: 0) {
+            AppChrome(
+                title: nil,
+                leadingSystemName: nil,
+                trailingSystemName: "square.grid.2x2",
+                trailingAction: store.showTimeline
+            )
+
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 18) {
+                    title
+                    DayStatHeader(day: store.selectedDay)
+                    DayPager(store: store)
+                    AgentMemoryStrip(memory: store.memory)
+                    conversation
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 116)
+            }
+
+            JournalInputBar(text: $store.draftInput, addAction: store.showCapture, sendAction: store.logDraftInput)
+                .padding(.horizontal, 18)
+                .padding(.bottom, 8)
+                .background(JustEnoughDesign.pageBackground.opacity(0.75))
+        }
+    }
+
+    private var title: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Just Enough")
+                .editorialTitle(40)
+                .padding(.top, 8)
+            Text("A personal nutrition agent for messy real meals.")
+                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .foregroundStyle(JustEnoughDesign.secondaryInk)
+        }
+    }
+
+    private var conversation: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Agent thread")
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .tracking(2)
+                .foregroundStyle(JustEnoughDesign.secondaryInk)
+                .textCase(.uppercase)
+            ForEach(store.selectedDay.messages) { message in
+                VStack(alignment: .leading, spacing: 12) {
+                    MessageBubble(message: message)
+                    InlineMealResults(entries: store.entries(relatedTo: message)) { entry in
+                        store.selectEntry(entry)
+                    }
+                }
+            }
+        }
+    }
+}
+
+private struct DayPager: View {
+    @Bindable var store: JournalStore
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Button(action: store.showPreviousDay) {
+                Label("Previous day", systemImage: "chevron.left")
+                    .labelStyle(.iconOnly)
+                    .frame(width: 42, height: 42)
+                    .background(.ultraThinMaterial, in: Circle())
+            }
+            .disabled(!store.canShowPreviousDay)
+            .opacity(store.canShowPreviousDay ? 1 : 0.32)
+
+            ForEach(store.days) { day in
+                Button {
+                    store.showDay(day)
+                } label: {
+                    Text(label(for: day))
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .padding(.horizontal, 13)
+                        .frame(height: 36)
+                        .background(day.id == store.selectedDayID ? JustEnoughDesign.ink : .clear, in: Capsule())
+                        .foregroundStyle(day.id == store.selectedDayID ? JustEnoughDesign.pageBackground : JustEnoughDesign.secondaryInk)
+                }
+                .buttonStyle(.plain)
+            }
+
+            Spacer()
+
+            Button(action: store.showNextDay) {
+                Label("Next day", systemImage: "chevron.right")
+                    .labelStyle(.iconOnly)
+                    .frame(width: 42, height: 42)
+                    .background(.ultraThinMaterial, in: Circle())
+            }
+            .disabled(!store.canShowNextDay)
+            .opacity(store.canShowNextDay ? 1 : 0.32)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func label(for day: FoodDay) -> String {
+        guard day.title != "Today" else { return "Today" }
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "MMM d"
+        return formatter.string(from: day.date)
+    }
+}
+
+private struct AgentMemoryStrip: View {
+    let memory: UserNutritionMemory
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Agent memory")
+                .tinyCaps()
+            HStack(spacing: 8) {
+                memoryPill("\(memory.dailyProteinTarget)g protein")
+                memoryPill("lifting focus")
+                memoryPill("\(memory.commonFoods.count) common foods")
+            }
+        }
+        .padding(.vertical, 2)
+    }
+
+    private func memoryPill(_ text: String) -> some View {
+        Text(text)
+            .font(.system(size: 12, weight: .bold, design: .rounded))
+            .lineLimit(1)
+            .minimumScaleFactor(0.75)
+            .foregroundStyle(JustEnoughDesign.secondaryInk)
+            .padding(.horizontal, 12)
+            .frame(height: 32)
+            .background(.ultraThinMaterial, in: Capsule())
+    }
+}
+
+private struct InlineMealResults: View {
+    let entries: [FoodEntry]
+    let action: (FoodEntry) -> Void
+
+    var body: some View {
+        if !entries.isEmpty {
+            VStack(spacing: 10) {
+                ForEach(entries) { entry in
+                    MealRow(entry: entry) {
+                        action(entry)
+                    }
+                    .padding(10)
+                    .background(JustEnoughDesign.glass, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                }
+            }
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+        }
+    }
+}
