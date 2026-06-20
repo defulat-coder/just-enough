@@ -33,4 +33,13 @@
 - Expected leverage: the detail page now reads as a stable screen composition, with section inputs explicit and the save action isolated.
 - Verification: passed `build_run_sim --reset-journal`, runtime UI snapshot opening a meal detail sheet, simulator screenshot check, `git diff --check`, and `scripts/verify_delivery.sh`.
 - Autoreview: checked that section extraction kept all original labels, image sizing, slider range/step, save accessibility identifier, source/confidence rendering, and calorie-save orchestration.
+- Commit: `3ec1ea3 Split food detail view sections`.
+
+### Step 4 - Split daily conversation composition
+
+- Candidate: `DailyConversationView` still hid the title and conversation stream behind computed `some View` helpers.
+- Change: extract `DailyConversationTitle` and `AgentConversationSection`, passing explicit messages, entry lookup, and selection callbacks.
+- Expected leverage: the home screen body now shows the app chrome, day summary, pager, memory strip, conversation stream, and input bar as explicit composition.
+- Verification: passed `build_run_sim --reset-journal`, runtime UI flow typing `coffee and salmon`, header update to `2,460` kcal / `119g` protein, runtime candidates for new reply/cards, simulator screenshot check, `git diff --check`, and `scripts/verify_delivery.sh`.
+- Autoreview: checked that title copy, conversation label, related-entry lookup, entry selection, input binding, and send/capture actions stayed equivalent.
 - Commit: pending.

@@ -14,11 +14,15 @@ struct DailyConversationView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 18) {
-                    title
+                    DailyConversationTitle()
                     DayStatHeader(day: store.selectedDay)
                     DayPager(store: store)
                     AgentMemoryStrip(memory: store.memory)
-                    conversation
+                    AgentConversationSection(
+                        messages: store.selectedDay.messages,
+                        entriesForMessage: store.entries(relatedTo:),
+                        selectEntry: store.selectEntry
+                    )
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 116)
@@ -30,8 +34,10 @@ struct DailyConversationView: View {
                 .background(JustEnoughDesign.pageBackground.opacity(0.75))
         }
     }
+}
 
-    private var title: some View {
+private struct DailyConversationTitle: View {
+    var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("刚刚好")
                 .editorialTitle(40)
@@ -41,17 +47,23 @@ struct DailyConversationView: View {
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
         }
     }
+}
 
-    private var conversation: some View {
+private struct AgentConversationSection: View {
+    let messages: [AgentMessage]
+    let entriesForMessage: (AgentMessage) -> [FoodEntry]
+    let selectEntry: (FoodEntry) -> Void
+
+    var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text("智能体对话")
                 .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
-            ForEach(store.selectedDay.messages) { message in
+            ForEach(messages) { message in
                 VStack(alignment: .leading, spacing: 12) {
                     MessageBubble(message: message)
-                    InlineMealResults(entries: store.entries(relatedTo: message)) { entry in
-                        store.selectEntry(entry)
+                    InlineMealResults(entries: entriesForMessage(message)) { entry in
+                        selectEntry(entry)
                     }
                 }
             }
