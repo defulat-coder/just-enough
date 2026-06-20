@@ -235,7 +235,7 @@ enum JournalFixtures {
                 calories: calories,
                 macros: macros,
                 confidence: 0.86,
-                source: "Local nutrition model",
+                source: "USDA-style local nutrition",
                 rationale: "Estimated from the user's common foods and stable local nutrition fixtures."
             ),
             visual: FoodVisual(imageName: image, heroImageName: hero, backgroundImageName: image == "pancakes" ? "warm-detail-bg" : "camera-bg"),

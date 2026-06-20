@@ -39,7 +39,7 @@ struct LocalNutritionProvider: NutritionProviding {
             calories: known.0,
             macros: known.1,
             confidence: normalized.contains("unknown") ? 0.55 : 0.84,
-            source: "Local deterministic nutrition provider",
+            source: "USDA-style local nutrition",
             rationale: known.2
         )
     }

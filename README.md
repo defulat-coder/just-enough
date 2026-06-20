@@ -33,6 +33,14 @@ The first release intentionally does not call live external services. Nutrition,
 
 Open `JustEnough.xcodeproj` in Xcode and run the `JustEnough` scheme on an iPhone simulator.
 
+For deterministic QA screenshots, launch with:
+
+```text
+--reset-journal
+```
+
+This resets the local JSON journal to the bundled seed data.
+
 Verified local target:
 
 - Scheme: `JustEnough`
@@ -64,6 +72,20 @@ Verification screenshots are saved in `docs/verification/`:
 - `thread-first-home.jpg`
 - `thread-log-results.jpg`
 - `image-catalog-timeline.jpg`
+- `round-03-thread-tools.jpg`
+- `round-04-recognition-trace.jpg`
+- `round-05-detail-source.jpg`
+- `round-06-zoomed-timeline.jpg`
+
+## Frame Audit
+
+Use the frame audit helper to sample a simulator recording or source video:
+
+```bash
+scripts/frame_audit.sh path/to/video.mp4 docs/verification/frame-audit
+```
+
+The script writes sampled frames and a contact sheet for visual review.
 
 ## Release Notes
 

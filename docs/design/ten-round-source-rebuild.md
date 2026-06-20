@@ -46,17 +46,26 @@ This log tracks the requested repeated loop: read the original X source, inspect
 - Adjustment: timeline header now says it is zoomed out from agent threads, and each day section exposes an `Open thread` action.
 - Evidence: pending timeline screenshot.
 
-## Round 7 - Pending
+## Round 7 - Detail Visual Weight
 
-Focus: visual consistency of food cards and row spacing against the video frames.
+- Source pressure: the visual pass should remove awkward layout weight and generic UI heaviness.
+- Gap: the detail edit button read like a heavy red bar, source names were too long for compact estimate pills, and custom sheet close controls were unreliable against the rounded sheet edge.
+- Adjustment: shortened nutrition source copy, constrained the save action to a centered capsule, and replaced the custom close control with the system sheet drag indicator.
+- Evidence: detail screenshot showed the issue; implementation was rebuilt and now uses the system sheet dismiss affordance.
 
-## Round 8 - Pending
+## Round 8 - Frame Audit Artifact
 
-Focus: frame-level verification artifact, not only static screenshots.
+- Source pressure: the article calls out frame-level verification and contact sheets.
+- Gap: the repo had screenshots but no repeatable way to audit video frames.
+- Adjustment: added `scripts/frame_audit.sh` to inspect MP4 metadata, extract frames, and generate a contact sheet.
+- Evidence: recorded `docs/verification/round-08-current-flow.mp4` and ran the script. The environment lacks ffmpeg/ffprobe, so the script used its Quick Look fallback and wrote `docs/verification/round-08-frame-audit/contact-sheet.jpg`.
 
-## Round 9 - Pending
+## Round 9 - Product Readiness Instructions
 
-Focus: product readiness and local run instructions.
+- Source pressure: public replies ask whether people can test the app; setup should be explicit.
+- Gap: README did not mention deterministic reset or frame audit workflow.
+- Adjustment: README now documents `--reset-journal` verification and the frame-audit script.
+- Evidence: README includes deterministic launch args and `scripts/frame_audit.sh` usage.
 
 ## Round 10 - Pending
 

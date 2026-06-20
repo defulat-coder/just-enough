@@ -22,12 +22,7 @@ struct FoodDetailView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 22) {
-                    AppChrome(
-                        title: nil,
-                        leadingSystemName: "xmark",
-                        trailingSystemName: nil,
-                        leadingAction: store.closeDetail
-                    )
+                    Color.clear.frame(height: 16)
                     titleBlock
                     FoodImage(visual: entry.visual, hero: true)
                         .frame(height: 275)
@@ -42,6 +37,7 @@ struct FoodDetailView: View {
         }
         .premiumPage()
         .presentationDetents([.large])
+        .presentationDragIndicator(.visible)
     }
 
     private var titleBlock: some View {
@@ -86,9 +82,10 @@ struct FoodDetailView: View {
             }
             .font(.system(size: 15, weight: .bold, design: .rounded))
             .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: 260)
             .padding(.vertical, 13)
             .background(JustEnoughDesign.accent, in: Capsule())
+            .frame(maxWidth: .infinity, alignment: .center)
             .accessibilityIdentifier("SaveCalorieAdjustment")
         }
     }
