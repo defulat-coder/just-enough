@@ -6,7 +6,7 @@ struct TimelineCatalogView: View {
     var body: some View {
         VStack(spacing: 0) {
             AppChrome(
-                title: "Meal Catalog",
+                title: "饮食图册",
                 leadingSystemName: "chevron.left",
                 trailingSystemName: nil,
                 leadingAction: { store.mode = .day }
@@ -27,9 +27,9 @@ struct TimelineCatalogView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Every meal, pulled back into a quiet catalog.")
+            Text("把每一餐拉远成一本安静的图册。")
                 .editorialTitle(34)
-            Text("Zoomed out from \(store.days.count) agent threads · \(store.totalLoggedCalories.formatted()) kcal logged")
+            Text("来自 \(store.days.count) 个智能体线程 · 已记录 \(store.totalLoggedCalories.formatted()) 千卡")
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
         }
@@ -43,7 +43,7 @@ struct TimelineCatalogView: View {
             } label: {
                 VStack(alignment: .leading, spacing: 8) {
                     DayStatHeader(day: day)
-                    Text("Open \(day.title.lowercased()) thread")
+                    Text("打开\(day.title)的对话")
                         .font(.system(size: 12, weight: .bold, design: .rounded))
                         .foregroundStyle(JustEnoughDesign.secondaryInk)
                 }
@@ -81,7 +81,7 @@ private struct TimelineMealTile: View {
             Text(entry.name)
                 .font(.system(size: 16, weight: .semibold, design: .rounded))
                 .lineLimit(2)
-            Text("\(entry.estimate.calories) cal")
+            Text("\(entry.estimate.calories) 千卡")
                 .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
         }

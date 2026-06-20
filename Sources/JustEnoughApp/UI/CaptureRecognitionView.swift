@@ -84,7 +84,7 @@ struct RecognitionReviewView: View {
                         }
                         .accessibilityIdentifier("RecognizedMeal")
 
-                        Button("Accept and return to thread") {
+                        Button("接受并回到对话") {
                             store.acceptRecognition()
                         }
                         .font(.system(size: 16, weight: .bold, design: .rounded))
@@ -106,12 +106,12 @@ struct RecognitionReviewView: View {
 private struct RecognitionTrace: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 9) {
-            Text("Agent analysis")
+            Text("智能体分析")
                 .tinyCaps()
             HStack(spacing: 7) {
-                tracePill("vision")
-                tracePill("memory")
-                tracePill("nutrition DB")
+                tracePill("视觉识别")
+                tracePill("记忆")
+                tracePill("营养库")
             }
         }
     }

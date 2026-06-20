@@ -28,7 +28,7 @@ extension Text {
     func tinyCaps() -> some View {
         self
             .font(.system(size: 11, weight: .bold, design: .rounded))
-            .tracking(4)
+            .tracking(0)
             .foregroundStyle(JustEnoughDesign.secondaryInk.opacity(0.72))
     }
 }

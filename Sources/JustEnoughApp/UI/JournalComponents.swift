@@ -78,10 +78,10 @@ struct DayStatHeader: View {
                     HStack(alignment: .lastTextBaseline, spacing: 5) {
                         Text(day.calories.formatted())
                             .font(.system(size: prominent ? 54 : 27, weight: .bold, design: .rounded))
-                        Text("cal")
+                        Text("千卡")
                             .font(.system(size: 14, weight: .semibold, design: .rounded))
                     }
-                    Text("\(day.macros.protein)g protein")
+                    Text("\(day.macros.protein)g 蛋白")
                         .font(.system(size: 13, weight: .semibold, design: .rounded))
                         .foregroundStyle(JustEnoughDesign.secondaryInk)
                     Text(day.calorieBalanceText)
@@ -115,9 +115,9 @@ struct MacroStrip: View {
 
     var body: some View {
         HStack(spacing: 22) {
-            macro(value: macros.protein, label: "protein")
-            macro(value: macros.carbs, label: "carbs")
-            macro(value: macros.fat, label: "fat")
+            macro(value: macros.protein, label: "蛋白")
+            macro(value: macros.carbs, label: "碳水")
+            macro(value: macros.fat, label: "脂肪")
         }
     }
 
@@ -125,9 +125,8 @@ struct MacroStrip: View {
         HStack(alignment: .firstTextBaseline, spacing: 5) {
             Text("\(value)")
                 .font(.system(size: 18, weight: .bold, design: .rounded))
-            Text(label.uppercased())
+            Text(label)
                 .font(.system(size: 10, weight: .bold, design: .rounded))
-                .tracking(2)
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
         }
     }
@@ -158,7 +157,7 @@ struct MealTile: View {
                     .font(.system(size: 14, weight: .bold, design: .rounded))
                     .lineLimit(1)
                     .minimumScaleFactor(0.75)
-                Text("\(entry.estimate.calories) cal")
+                Text("\(entry.estimate.calories) 千卡")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(JustEnoughDesign.secondaryInk)
             }
@@ -187,7 +186,7 @@ struct MealRow: View {
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundStyle(JustEnoughDesign.secondaryInk)
                         .lineLimit(1)
-                    Text("\(entry.estimate.calories) cal   \(entry.estimate.macros.shortText)")
+                    Text("\(entry.estimate.calories) 千卡   \(entry.estimate.macros.shortText)")
                         .font(.system(size: 12, weight: .bold, design: .rounded))
                         .foregroundStyle(JustEnoughDesign.secondaryInk)
                 }
@@ -238,7 +237,7 @@ struct JournalInputBar: View {
             .accessibilityIdentifier("AddMeal")
 
             HStack(spacing: 8) {
-                TextField("Dump meals, notes, or photos", text: $text, axis: .vertical)
+                TextField("写下吃了什么，或加照片", text: $text, axis: .vertical)
                     .font(.system(size: 16, weight: .medium, design: .rounded))
                     .textInputAutocapitalization(.sentences)
                     .lineLimit(1...3)

@@ -33,10 +33,10 @@ struct DailyConversationView: View {
 
     private var title: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Just Enough")
+            Text("刚刚好")
                 .editorialTitle(40)
                 .padding(.top, 8)
-            Text("A personal nutrition agent for messy real meals.")
+            Text("一个懂你真实饮食的营养智能体。")
                 .font(.system(size: 15, weight: .medium, design: .rounded))
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
         }
@@ -44,11 +44,9 @@ struct DailyConversationView: View {
 
     private var conversation: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Agent thread")
+            Text("智能体对话")
                 .font(.system(size: 13, weight: .bold, design: .rounded))
-                .tracking(2)
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
-                .textCase(.uppercase)
             ForEach(store.selectedDay.messages) { message in
                 VStack(alignment: .leading, spacing: 12) {
                     MessageBubble(message: message)
@@ -67,7 +65,7 @@ private struct DayPager: View {
     var body: some View {
         HStack(spacing: 10) {
             Button(action: store.showPreviousDay) {
-                Label("Previous day", systemImage: "chevron.left")
+                Label("上一天", systemImage: "chevron.left")
                     .labelStyle(.iconOnly)
                     .frame(width: 42, height: 42)
                     .background(.ultraThinMaterial, in: Circle())
@@ -96,7 +94,7 @@ private struct DayPager: View {
             .frame(maxWidth: .infinity)
 
             Button(action: store.showNextDay) {
-                Label("Next day", systemImage: "chevron.right")
+                Label("下一天", systemImage: "chevron.right")
                     .labelStyle(.iconOnly)
                     .frame(width: 42, height: 42)
                     .background(.ultraThinMaterial, in: Circle())
@@ -113,12 +111,12 @@ private struct AgentMemoryStrip: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Agent memory")
+            Text("智能体记忆")
                 .tinyCaps()
             HStack(spacing: 8) {
-                memoryPill("\(memory.dailyProteinTarget)g protein")
-                memoryPill("lifting focus")
-                memoryPill("\(memory.commonFoods.count) common foods")
+                memoryPill("\(memory.dailyProteinTarget)g 蛋白")
+                memoryPill("训练优先")
+                memoryPill("\(memory.commonFoods.count) 个常吃")
             }
         }
         .padding(.vertical, 2)
@@ -162,10 +160,10 @@ private struct AgentToolTrace: View {
 
     var body: some View {
         HStack(spacing: 7) {
-            tracePill("stream")
-            tracePill("memory")
-            tracePill("nutrition DB")
-            tracePill("\(entryCount) foods")
+            tracePill("流式")
+            tracePill("记忆")
+            tracePill("营养库")
+            tracePill("\(entryCount) 个食物")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

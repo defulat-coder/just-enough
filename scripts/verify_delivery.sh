@@ -39,7 +39,7 @@ fi
 rg -q -- "--reset-journal" README.md Sources/JustEnoughApp/State/JournalStore.swift \
   || { echo "Missing reset-journal documentation or implementation" >&2; exit 1; }
 
-rg -q "Dump meals, notes, or photos" Sources/JustEnoughApp/UI/JournalComponents.swift \
+rg -q "写下吃了什么，或加照片" Sources/JustEnoughApp/UI/JournalComponents.swift \
   || { echo "Input surface no longer advertises messy meal dumping" >&2; exit 1; }
 
 echo "delivery verification passed"

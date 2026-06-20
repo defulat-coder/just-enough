@@ -120,17 +120,17 @@ final class JournalStore {
     func capturePhoto() {
         mode = .recognition
         let draft = AgentMealDraft(
-            name: "Avocado Garden Salad",
-            servingDescription: "egg, tomato, cucumber, and crunchy topping",
+            name: "牛油果花园沙拉",
+            servingDescription: "鸡蛋、番茄、黄瓜和脆脆配料",
             loggedAt: selectedDay.date
         )
         lastRecognizedEntry = makeEntry(from: draft)
-        streamingText = "That looks like a bright salad bowl with egg, greens, tomato, cucumber, and a crunchy topping."
+        streamingText = "看起来是一份明亮的沙拉碗，有鸡蛋、绿叶菜、番茄、黄瓜和脆脆配料。"
     }
 
     func acceptRecognition() {
         guard let entry = lastRecognizedEntry else { return }
-        append(entry: entry, userText: "photo of my salad", agentText: "Logged Avocado Garden Salad at \(entry.estimate.calories) kcal with \(entry.estimate.macros.protein)g protein.")
+        append(entry: entry, userText: "我的沙拉照片", agentText: "已记录牛油果花园沙拉：\(entry.estimate.calories) 千卡，\(entry.estimate.macros.protein)g 蛋白。")
         selectedEntry = nil
         mode = .day
     }
@@ -139,7 +139,7 @@ final class JournalStore {
         guard let selectedEntry else { return }
         updateEntry(selectedEntry.id) { entry in
             entry.estimate.calories = calories
-            entry.estimate.rationale = "Adjusted by the user after reviewing the agent estimate."
+            entry.estimate.rationale = "用户复核智能体估算后手动调整。"
         }
     }
 
