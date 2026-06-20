@@ -9,7 +9,7 @@ struct TimelineCatalogView: View {
                 title: "饮食图册",
                 leadingSystemName: "chevron.left",
                 trailingSystemName: nil,
-                leadingAction: { store.mode = .day }
+                leadingAction: store.returnToDay
             )
 
             ScrollView(showsIndicators: false) {

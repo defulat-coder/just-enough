@@ -15,4 +15,13 @@
 - Expected leverage: UI callers still use `JournalStore`, while journal write rules gain better locality and a direct future test surface.
 - Verification: passed `build_run_sim --reset-journal`, simulator screenshot check, `git diff --check`, and `scripts/verify_delivery.sh`.
 - Autoreview: checked that the extracted interface preserves the original early-return behavior, persistence timing, generated message linkage, and selected-entry refresh.
+- Commit: `7436ccf Extract journal mutation engine`.
+
+### Step 2 - Keep navigation mode behind store commands
+
+- Candidate: UI screens were directly assigning `store.mode`, which made route transitions a shared implementation detail.
+- Change: make `mode` read-only outside `JournalStore` and replace direct writes with `returnToDay()` / `returnToCapture()`.
+- Expected leverage: route names and transitions now stay local to the store interface, while views express user intent.
+- Verification: passed `build_run_sim --reset-journal`, simulator screenshot check, no remaining `store.mode =` writes, `git diff --check`, and `scripts/verify_delivery.sh`.
+- Autoreview: checked that route rendering still reads `mode`, sheets still bind `selectedEntry`, and capture/timeline back actions now use store intent methods.
 - Commit: pending.

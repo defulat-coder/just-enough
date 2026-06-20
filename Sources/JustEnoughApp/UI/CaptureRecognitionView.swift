@@ -15,7 +15,7 @@ struct CaptureRecognitionView: View {
                 AppChrome(
                     leadingSystemName: "xmark",
                     trailingSystemName: nil,
-                    leadingAction: { store.mode = .day }
+                    leadingAction: store.returnToDay
                 )
                 Spacer()
                 HStack(alignment: .bottom) {
@@ -60,7 +60,7 @@ struct RecognitionReviewView: View {
             AppChrome(
                 leadingSystemName: "chevron.left",
                 trailingSystemName: nil,
-                leadingAction: { store.mode = .capture }
+                leadingAction: store.returnToCapture
             )
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 22) {

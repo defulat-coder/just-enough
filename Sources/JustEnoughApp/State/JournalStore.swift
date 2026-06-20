@@ -12,7 +12,7 @@ final class JournalStore {
 
     var days: [FoodDay]
     var memory: UserNutritionMemory
-    var mode: Mode = .day
+    private(set) var mode: Mode = .day
     var selectedDayID: String
     var selectedEntry: FoodEntry?
     var draftInput = ""
@@ -98,6 +98,14 @@ final class JournalStore {
 
     func showCapture() {
         mode = .capture
+    }
+
+    func returnToCapture() {
+        mode = .capture
+    }
+
+    func returnToDay() {
+        mode = .day
     }
 
     func selectEntry(_ entry: FoodEntry) {
