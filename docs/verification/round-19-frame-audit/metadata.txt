@@ -1,0 +1,6 @@
+ffmpeg_or_ffprobe=missing
+fallback=quicklook-thumbnail
+docs/verification/round-19-current-flow.mp4: ISO Media, MP4 v2 [ISO 14496-14]
+input=docs/verification/round-19-current-flow.mp4
+frames=1
+contact_sheet=docs/verification/round-19-frame-audit/contact-sheet.jpg

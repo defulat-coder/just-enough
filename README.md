@@ -80,6 +80,14 @@ Verification screenshots are saved in `docs/verification/`:
 - `round-08-current-flow.mp4`
 - `round-08-frame-audit/contact-sheet.jpg`
 - `round-10-final-home.jpg`
+- `round-13-clean-target.jpg`
+- `round-13-stream-parser-target.jpg`
+- `round-16-home-input.jpg`
+- `round-16-home-input-return.jpg`
+- `round-16-timeline-framing.jpg`
+- `round-19-current-flow.mp4`
+- `round-19-frame-audit/contact-sheet.jpg`
+- `round-20-final-home.jpg`
 
 ## Frame Audit
 
@@ -90,6 +98,16 @@ scripts/frame_audit.sh path/to/video.mp4 docs/verification/frame-audit
 ```
 
 The script writes sampled frames and a contact sheet for visual review.
+
+## Delivery Verification
+
+Run the local delivery gate before handoff:
+
+```bash
+scripts/verify_delivery.sh
+```
+
+It checks the source-alignment docs, required verification artifacts, deterministic reset support, and unfinished markers.
 
 ## Release Notes
 

@@ -46,18 +46,30 @@ This is the second requested 10-round loop. Each round repeats: inspect original
 - Adjustment: accept now logs the photo result and returns to the day thread; the button copy says `Accept and return to thread`.
 - Evidence: simulator tap on `Accept and return to thread` returned to the day thread and updated the total to `2,090 cal`; no detail sheet opened.
 
-## Round 17 - Pending
+## Round 17 - Delivery Gate Script
 
-Focus: add a local verifier script that checks required docs/artifacts and can be run before handoff.
+- Source pressure: the original workflow asks for organized docs and verification so work does not get lost across iterations.
+- Gap: delivery completeness was still mostly manual.
+- Adjustment: added `scripts/verify_delivery.sh` to check required docs, verification artifacts, 20 round entries, reset support, and unfinished markers.
+- Evidence: initial run found unfinished markers, which drove the Round 18 cleanup.
 
-## Round 18 - Pending
+## Round 18 - Delivery Gate Run
 
-Focus: run the verifier and fix any evidence gaps.
+- Source pressure: the product should be testable and handoff-ready.
+- Gap: verifier had not yet been run against the current workspace.
+- Adjustment: run `scripts/verify_delivery.sh` and fix any failure.
+- Evidence: first verifier run failed on unfinished markers; those markers are being retired as the final rounds are completed.
 
-## Round 19 - Pending
+## Round 19 - Updated Visual Evidence
 
-Focus: capture updated screenshots/video after the second 10-round pass.
+- Source pressure: each visual pass should leave artifacts, not just claims.
+- Gap: screenshots existed for rounds 13 and 16, but no second-pass video artifact after the new flow changes.
+- Adjustment: capture updated screenshots/video after current changes.
+- Evidence: `docs/verification/round-19-home.jpg`, `docs/verification/round-19-current-flow.mp4`, and `docs/verification/round-19-frame-audit/contact-sheet.jpg`.
 
-## Round 20 - Pending
+## Round 20 - Final Current-State Audit
 
-Focus: final current-state audit, build, git status, and commit.
+- Source pressure: the repeated loop should end only after the current implementation is verified, documented, and clean.
+- Gap: the second 10-round log still needed final build proof and a clean delivery gate.
+- Adjustment: ran final `build_run_sim` with `--reset-journal`, captured `round-20-final-home.jpg`, expanded the delivery verifier to include second-pass artifacts, and prepared a final commit.
+- Evidence: final build succeeded with no warnings or errors; `docs/verification/round-20-final-home.jpg`; `scripts/verify_delivery.sh` passes after this round.
