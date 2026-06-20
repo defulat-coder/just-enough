@@ -162,6 +162,7 @@ private struct AgentToolTrace: View {
 
     var body: some View {
         HStack(spacing: 7) {
+            tracePill("stream")
             tracePill("memory")
             tracePill("nutrition DB")
             tracePill("\(entryCount) foods")

@@ -103,6 +103,14 @@ struct FoodDay: Identifiable, Codable, Hashable {
         min(Double(calories) / Double(targetCalories), 1)
     }
 
+    var calorieBalanceText: String {
+        let balance = targetCalories - calories
+        if balance >= 0 {
+            return "\(balance.formatted()) cal left"
+        }
+        return "\(abs(balance).formatted()) cal over"
+    }
+
     var eyebrow: String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -132,7 +140,7 @@ struct UserNutritionMemory: Codable, Hashable {
         dailyCalorieTarget: 2_800,
         dailyProteinTarget: 150,
         trainingContext: "Lifting-focused nutrition, high protein, calm tracking.",
-        commonFoods: ["Cafe Latte", "Blueberry Pancakes", "Crisp Greens Bowl", "Grilled Salmon Plate"]
+        commonFoods: ["Cafe Latte", "Blueberry Pancakes", "Crisp Greens Bowl", "Grilled Salmon Plate", "Greek Yogurt"]
     )
 }
 

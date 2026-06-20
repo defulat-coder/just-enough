@@ -27,6 +27,12 @@ struct LocalNutritionProvider: NutritionProviding {
             known = (520, MacroProfile(protein: 10, carbs: 68, fat: 18), "Pancake estimate matched from breakfast history.")
         } else if normalized.contains("latte") || normalized.contains("coffee") {
             known = (180, MacroProfile(protein: 6, carbs: 22, fat: 6), "Latte estimate matched to oat milk preference.")
+        } else if normalized.contains("yogurt") {
+            known = (210, MacroProfile(protein: 24, carbs: 18, fat: 4), "Greek yogurt estimate matched to high-protein snack history.")
+        } else if normalized.contains("egg") {
+            known = (220, MacroProfile(protein: 18, carbs: 2, fat: 15), "Egg estimate matched to a three-egg serving.")
+        } else if normalized.contains("chicken") {
+            known = (540, MacroProfile(protein: 48, carbs: 45, fat: 14), "Chicken rice estimate uses a lifting-day serving size.")
         } else if normalized.contains("salmon") {
             known = (620, MacroProfile(protein: 41, carbs: 43, fat: 30), "Salmon plate estimate includes rice and extra vegetables.")
         } else if normalized.contains("avocado") || normalized.contains("salad") || normalized.contains("greens") {
@@ -79,6 +85,15 @@ struct LocalAgentRuntime: AgentRunning {
         if normalized.contains("latte") || normalized.contains("coffee") {
             append("Cafe Latte", "iced, oat milk")
         }
+        if normalized.contains("yogurt") {
+            append("Greek Yogurt Bowl", "berries, honey, high-protein yogurt")
+        }
+        if normalized.contains("egg") {
+            append("Soft Eggs", "three eggs, simple seasoning")
+        }
+        if normalized.contains("chicken") || normalized.contains("rice") {
+            append("Chicken Rice Bowl", "chicken, rice, vegetables")
+        }
         if normalized.contains("salmon") {
             append("Grilled Salmon Plate", "salmon, rice, extra vegetables")
         }
@@ -95,7 +110,8 @@ struct LocalAgentRuntime: AgentRunning {
         let calories = entries.reduce(0) { $0 + $1.estimate.calories }
         let protein = entries.reduce(0) { $0 + $1.estimate.macros.protein }
         let names = entries.map(\.name).joined(separator: ", ")
-        return "Logged \(names). That adds \(calories) kcal and \(protein)g protein toward your \(memory.dailyProteinTarget)g target."
+        let proteinGap = max(memory.dailyProteinTarget - protein, 0)
+        return "Logged \(names). Streaming estimate: \(calories) kcal, \(protein)g protein. \(proteinGap)g protein left toward your \(memory.dailyProteinTarget)g target."
     }
 }
 

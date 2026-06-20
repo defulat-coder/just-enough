@@ -170,7 +170,14 @@ final class JournalStore {
         days[index].messages.append(AgentMessage(role: .user, text: userText, createdAt: days[index].date, relatedEntryIDs: entries.map(\.id)))
         days[index].messages.append(AgentMessage(role: .agent, text: agentText, createdAt: days[index].date, relatedEntryIDs: entries.map(\.id)))
         days[index].summary = agentText
+        updateMemory(with: entries)
         persist()
+    }
+
+    private func updateMemory(with entries: [FoodEntry]) {
+        for entry in entries where !memory.commonFoods.contains(entry.name) {
+            memory.commonFoods.append(entry.name)
+        }
     }
 
     private func updateEntry(_ entryID: UUID, mutation: (inout FoodEntry) -> Void) {

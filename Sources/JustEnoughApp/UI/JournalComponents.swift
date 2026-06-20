@@ -84,6 +84,9 @@ struct DayStatHeader: View {
                     Text("\(day.macros.protein)g protein")
                         .font(.system(size: 13, weight: .semibold, design: .rounded))
                         .foregroundStyle(JustEnoughDesign.secondaryInk)
+                    Text(day.calorieBalanceText)
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundStyle(JustEnoughDesign.secondaryInk.opacity(0.78))
                 }
             }
             ProgressLine(progress: day.progress)
