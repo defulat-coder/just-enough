@@ -14,9 +14,16 @@ struct TimelineCatalogView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 32) {
-                    header
+                    TimelineCatalogHeader(
+                        dayCount: store.days.count,
+                        totalLoggedCalories: store.totalLoggedCalories
+                    )
                     ForEach(store.days) { day in
-                        daySection(day)
+                        TimelineDaySection(
+                            day: day,
+                            openDay: store.showDay,
+                            selectEntry: store.selectEntry
+                        )
                     }
                 }
                 .padding(.horizontal, 24)
@@ -24,22 +31,33 @@ struct TimelineCatalogView: View {
             }
         }
     }
+}
 
-    private var header: some View {
+private struct TimelineCatalogHeader: View {
+    let dayCount: Int
+    let totalLoggedCalories: Int
+
+    var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("把每一餐拉远成一本安静的图册。")
                 .editorialTitle(34)
-            Text("来自 \(store.days.count) 个智能体线程 · 已记录 \(store.totalLoggedCalories.formatted()) 千卡")
+            Text("来自 \(dayCount) 个智能体线程 · 已记录 \(totalLoggedCalories.formatted()) 千卡")
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundStyle(JustEnoughDesign.secondaryInk)
         }
         .padding(.top, 8)
     }
+}
 
-    private func daySection(_ day: FoodDay) -> some View {
+private struct TimelineDaySection: View {
+    let day: FoodDay
+    let openDay: (FoodDay) -> Void
+    let selectEntry: (FoodEntry) -> Void
+
+    var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Button {
-                store.showDay(day)
+                openDay(day)
             } label: {
                 VStack(alignment: .leading, spacing: 8) {
                     DayStatHeader(day: day)
@@ -53,7 +71,7 @@ struct TimelineCatalogView: View {
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 18), GridItem(.flexible(), spacing: 18)], spacing: 22) {
                 ForEach(day.entries) { entry in
                     Button {
-                        store.selectEntry(entry)
+                        selectEntry(entry)
                     } label: {
                         TimelineMealTile(entry: entry)
                     }

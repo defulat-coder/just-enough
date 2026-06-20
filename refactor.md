@@ -42,4 +42,13 @@
 - Expected leverage: the home screen body now shows the app chrome, day summary, pager, memory strip, conversation stream, and input bar as explicit composition.
 - Verification: passed `build_run_sim --reset-journal`, runtime UI flow typing `coffee and salmon`, header update to `2,460` kcal / `119g` protein, runtime candidates for new reply/cards, simulator screenshot check, `git diff --check`, and `scripts/verify_delivery.sh`.
 - Autoreview: checked that title copy, conversation label, related-entry lookup, entry selection, input binding, and send/capture actions stayed equivalent.
+- Commit: `336762c Clarify daily conversation composition`.
+
+### Step 5 - Split timeline catalog composition
+
+- Candidate: `TimelineCatalogView` still used computed helpers that closed over the whole store.
+- Change: extract `TimelineCatalogHeader` and `TimelineDaySection`, passing day counts, calorie totals, day data, and callbacks explicitly.
+- Expected leverage: the catalog page now has the same explicit composition style as the home and detail screens.
+- Verification: passed `build_run_sim --reset-journal`, runtime UI snapshot for `饮食图册`, explicit tap from home to catalog, catalog screenshot check, no remaining computed `some View` helpers / `store.mode =` writes, `git diff --check`, and `scripts/verify_delivery.sh`.
+- Autoreview: checked that catalog title, total calorie copy, day open action, entry selection callbacks, and meal tile rendering stayed equivalent.
 - Commit: pending.
