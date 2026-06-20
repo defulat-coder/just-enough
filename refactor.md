@@ -51,4 +51,10 @@
 - Expected leverage: the catalog page now has the same explicit composition style as the home and detail screens.
 - Verification: passed `build_run_sim --reset-journal`, runtime UI snapshot for `饮食图册`, explicit tap from home to catalog, catalog screenshot check, no remaining computed `some View` helpers / `store.mode =` writes, `git diff --check`, and `scripts/verify_delivery.sh`.
 - Autoreview: checked that catalog title, total calorie copy, day open action, entry selection callbacks, and meal tile rendering stayed equivalent.
-- Commit: pending.
+- Commit: `09019e0 Clarify timeline catalog composition`.
+
+### Final autoreview
+
+- Current shape: `JournalStore` is now the UI-facing observable interface; journal write behavior lives in `JournalMutationEngine`; route mode writes are local to the store; major SwiftUI screens use explicit private section views instead of computed helper blocks.
+- Remaining deliberate choices: provider protocols stay in `JournalServices.swift` because there is still only one local adapter per provider; splitting them further would add file churn without more depth. `JournalComponents.swift` remains a shared small-view library because its modules are already direct reusable leaf views.
+- Final verification: passed final `build_run_sim --reset-journal`, `git diff --check`, `scripts/verify_delivery.sh`, and source scan for remaining `store.mode =` writes / computed `some View` helpers in app sources.
