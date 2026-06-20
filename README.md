@@ -76,6 +76,10 @@ Verification screenshots are saved in `docs/verification/`:
 - `round-04-recognition-trace.jpg`
 - `round-05-detail-source.jpg`
 - `round-06-zoomed-timeline.jpg`
+- `round-07-detail-weight-before-close-fix.jpg`
+- `round-08-current-flow.mp4`
+- `round-08-frame-audit/contact-sheet.jpg`
+- `round-10-final-home.jpg`
 
 ## Frame Audit
 

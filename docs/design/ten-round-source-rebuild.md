@@ -30,21 +30,21 @@ This log tracks the requested repeated loop: read the original X source, inspect
 - Source pressure: photo input should feel like an agent using tools, not a static canned result.
 - Gap: recognition jumped from captured photo to final result with no visible analysis.
 - Adjustment: added `Agent analysis` chips for `vision`, `memory`, and `nutrition DB` on the recognition review screen.
-- Evidence: pending simulator capture flow screenshot.
+- Evidence: `docs/verification/round-04-recognition-trace.jpg`.
 
 ## Round 5 - Estimate Source In Detail
 
 - Source pressure: tracker must actually work, and estimates need trust without clutter.
 - Gap: detail had rationale text, but source/confidence were buried below the edit control.
 - Adjustment: added source/confidence pills directly under the primary calorie readout.
-- Evidence: pending detail screenshot.
+- Evidence: `docs/verification/round-05-detail-source.jpg`.
 
 ## Round 6 - Timeline As Zoomed-Out Threads
 
 - Source pressure: the timeline should feel like zooming out from day threads.
 - Gap: catalog did not explicitly connect itself back to the conversation model.
 - Adjustment: timeline header now says it is zoomed out from agent threads, and each day section exposes an `Open thread` action.
-- Evidence: pending timeline screenshot.
+- Evidence: `docs/verification/round-06-zoomed-timeline.jpg`.
 
 ## Round 7 - Detail Visual Weight
 
@@ -67,6 +67,9 @@ This log tracks the requested repeated loop: read the original X source, inspect
 - Adjustment: README now documents `--reset-journal` verification and the frame-audit script.
 - Evidence: README includes deterministic launch args and `scripts/frame_audit.sh` usage.
 
-## Round 10 - Pending
+## Round 10 - Final Completion Audit
 
-Focus: final source-to-implementation audit, build, screenshots, and git status.
+- Source pressure: repeat the original source review loop until the implemented product is materially closer and verified.
+- Gap: the previous log still had missing evidence and no final clean-launch proof.
+- Adjustment: re-read the round log, README, verification artifacts, and git history; ran a final clean `build_run_sim` with `--reset-journal`; captured a final home screenshot.
+- Evidence: `docs/verification/round-10-final-home.jpg`; final build succeeded with no warnings or errors.
