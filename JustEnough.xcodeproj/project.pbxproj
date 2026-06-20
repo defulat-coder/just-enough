@@ -14,6 +14,7 @@
 		11AA00000000000000000007 /* JournalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA00000000000000000017 /* JournalStore.swift */; };
 		11AA00000000000000000008 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA00000000000000000018 /* DesignSystem.swift */; };
 		11AA00000000000000000009 /* JournalComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA00000000000000000019 /* JournalComponents.swift */; };
+		11AA0000000000000000000F /* JournalMutationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA0000000000000000001F /* JournalMutationEngine.swift */; };
 		11AA0000000000000000000A /* JournalAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA0000000000000000001A /* JournalAppView.swift */; };
 		11AA0000000000000000000B /* DailyConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA0000000000000000001B /* DailyConversationView.swift */; };
 		11AA0000000000000000000C /* TimelineCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AA0000000000000000001C /* TimelineCatalogView.swift */; };
@@ -30,6 +31,7 @@
 		11AA00000000000000000017 /* JournalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State/JournalStore.swift; sourceTree = "<group>"; };
 		11AA00000000000000000018 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem/DesignSystem.swift; sourceTree = "<group>"; };
 		11AA00000000000000000019 /* JournalComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/JournalComponents.swift; sourceTree = "<group>"; };
+		11AA0000000000000000001F /* JournalMutationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/JournalMutationEngine.swift; sourceTree = "<group>"; };
 		11AA0000000000000000001A /* JournalAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/JournalAppView.swift; sourceTree = "<group>"; };
 		11AA0000000000000000001B /* DailyConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/DailyConversationView.swift; sourceTree = "<group>"; };
 		11AA0000000000000000001C /* TimelineCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/TimelineCatalogView.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				11AA00000000000000000011 /* JustEnoughApp.swift */,
 				11AA00000000000000000015 /* JournalModels.swift */,
 				11AA00000000000000000016 /* JournalServices.swift */,
+				11AA0000000000000000001F /* JournalMutationEngine.swift */,
 				11AA00000000000000000017 /* JournalStore.swift */,
 				11AA00000000000000000018 /* DesignSystem.swift */,
 				11AA00000000000000000019 /* JournalComponents.swift */,
@@ -164,6 +167,7 @@
 				11AA00000000000000000001 /* JustEnoughApp.swift in Sources */,
 				11AA00000000000000000005 /* JournalModels.swift in Sources */,
 				11AA00000000000000000006 /* JournalServices.swift in Sources */,
+				11AA0000000000000000000F /* JournalMutationEngine.swift in Sources */,
 				11AA00000000000000000007 /* JournalStore.swift in Sources */,
 				11AA00000000000000000008 /* DesignSystem.swift in Sources */,
 				11AA00000000000000000009 /* JournalComponents.swift in Sources */,

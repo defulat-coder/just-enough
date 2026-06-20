@@ -20,8 +20,7 @@ final class JournalStore {
     var streamingText = ""
 
     private let agent: AgentRunning
-    private let nutrition: NutritionProviding
-    private let visuals: FoodVisualProviding
+    private let mutations: JournalMutationEngine
     private let persistence: JournalPersisting
 
     init(
@@ -31,8 +30,7 @@ final class JournalStore {
         persistence: JournalPersisting = JSONJournalPersistence()
     ) {
         self.agent = agent
-        self.nutrition = nutrition
-        self.visuals = visuals
+        self.mutations = JournalMutationEngine(nutrition: nutrition, visuals: visuals)
         self.persistence = persistence
 
         let shouldReset = ProcessInfo.processInfo.arguments.contains("--reset-journal")
@@ -124,7 +122,7 @@ final class JournalStore {
             servingDescription: "鸡蛋、番茄、黄瓜和脆脆配料",
             loggedAt: selectedDay.date
         )
-        lastRecognizedEntry = makeEntry(from: draft)
+        lastRecognizedEntry = mutations.entries(from: [draft], memory: memory).first
         streamingText = "看起来是一份明亮的沙拉碗，有鸡蛋、绿叶菜、番茄、黄瓜和脆脆配料。"
     }
 
@@ -145,19 +143,9 @@ final class JournalStore {
 
     private func appendEntries(from input: String, date: Date) {
         let drafts = agent.parse(input: input, date: date, memory: memory)
-        let entries = drafts.map(makeEntry(from:))
+        let entries = mutations.entries(from: drafts, memory: memory)
         let agentText = agent.response(for: input, entries: entries, memory: memory)
         append(entries: entries, userText: input, agentText: agentText)
-    }
-
-    private func makeEntry(from draft: AgentMealDraft) -> FoodEntry {
-        FoodEntry(
-            name: draft.name,
-            servingDescription: draft.servingDescription,
-            estimate: nutrition.estimate(for: draft, memory: memory),
-            visual: visuals.visual(for: draft.name),
-            loggedAt: draft.loggedAt
-        )
     }
 
     private func append(entry: FoodEntry, userText: String, agentText: String) {
@@ -165,28 +153,15 @@ final class JournalStore {
     }
 
     private func append(entries: [FoodEntry], userText: String, agentText: String) {
-        guard let index = days.firstIndex(where: { $0.id == selectedDayID }) else { return }
-        days[index].entries.append(contentsOf: entries)
-        days[index].messages.append(AgentMessage(role: .user, text: userText, createdAt: days[index].date, relatedEntryIDs: entries.map(\.id)))
-        days[index].messages.append(AgentMessage(role: .agent, text: agentText, createdAt: days[index].date, relatedEntryIDs: entries.map(\.id)))
-        days[index].summary = agentText
-        updateMemory(with: entries)
-        persist()
-    }
-
-    private func updateMemory(with entries: [FoodEntry]) {
-        for entry in entries where !memory.commonFoods.contains(entry.name) {
-            memory.commonFoods.append(entry.name)
+        if mutations.record(entries: entries, userText: userText, agentText: agentText, selectedDayID: selectedDayID, days: &days, memory: &memory) {
+            persist()
         }
     }
 
     private func updateEntry(_ entryID: UUID, mutation: (inout FoodEntry) -> Void) {
-        for dayIndex in days.indices {
-            guard let entryIndex = days[dayIndex].entries.firstIndex(where: { $0.id == entryID }) else { continue }
-            mutation(&days[dayIndex].entries[entryIndex])
-            selectedEntry = days[dayIndex].entries[entryIndex]
+        if let updatedEntry = mutations.updateEntry(entryID, days: &days, mutation: mutation) {
+            selectedEntry = updatedEntry
             persist()
-            return
         }
     }
 
