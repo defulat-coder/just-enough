@@ -25,17 +25,26 @@ This is the second requested 10-round loop. Each round repeats: inspect original
 - Adjustment: added `calorieBalanceText` to `FoodDay` and displayed it beneath protein.
 - Evidence: clean home showed `1,140 cal left`; after the messy input it updated to `170 cal left`.
 
-## Round 14 - Pending
+## Round 14 - Messy Dump Input Surface
 
-Focus: improve the input surface so it explicitly supports dumping messy meal notes.
+- Source pressure: the user should be able to dump everything into an agent.
+- Gap: the input placeholder still sounded like a conventional calorie tracker question.
+- Adjustment: changed the placeholder to `Dump meals, notes, or photos` and enabled a compact 1-3 line vertical text field.
+- Evidence: `docs/verification/round-16-home-input-return.jpg` shows the new placeholder on the returned day thread.
 
-## Round 15 - Pending
+## Round 15 - Timeline Image Framing
 
-Focus: make timeline meal cards feel more like image-generated assets with consistent visual framing.
+- Source pressure: food entries should look like consistent generated/studio food visuals.
+- Gap: timeline images had uneven whitespace and no consistent generated-image frame.
+- Adjustment: added a soft white image frame around each timeline meal visual.
+- Evidence: `docs/verification/round-16-timeline-framing.jpg`.
 
-## Round 16 - Pending
+## Round 16 - Recognition Returns To Thread
 
-Focus: make photo recognition acceptance return visibly into the thread rather than feeling like a disconnected modal action.
+- Source pressure: photo input should become part of the unified conversation.
+- Gap: accepting recognition selected the food detail immediately, which made the flow feel modal-first.
+- Adjustment: accept now logs the photo result and returns to the day thread; the button copy says `Accept and return to thread`.
+- Evidence: simulator tap on `Accept and return to thread` returned to the day thread and updated the total to `2,090 cal`; no detail sheet opened.
 
 ## Round 17 - Pending
 

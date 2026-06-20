@@ -84,7 +84,7 @@ struct RecognitionReviewView: View {
                         }
                         .accessibilityIdentifier("RecognizedMeal")
 
-                        Button("Accept and log \(entry.name)") {
+                        Button("Accept and return to thread") {
                             store.acceptRecognition()
                         }
                         .font(.system(size: 16, weight: .bold, design: .rounded))

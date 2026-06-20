@@ -238,9 +238,10 @@ struct JournalInputBar: View {
             .accessibilityIdentifier("AddMeal")
 
             HStack(spacing: 8) {
-                TextField("What did you eat?", text: $text)
+                TextField("Dump meals, notes, or photos", text: $text, axis: .vertical)
                     .font(.system(size: 16, weight: .medium, design: .rounded))
                     .textInputAutocapitalization(.sentences)
+                    .lineLimit(1...3)
                     .accessibilityIdentifier("MealInput")
                 Button(action: sendAction) {
                     Image(systemName: "arrow.up")
@@ -253,7 +254,7 @@ struct JournalInputBar: View {
             }
             .padding(.leading, 17)
             .padding(.trailing, 8)
-            .frame(height: 52)
+            .frame(minHeight: 52)
             .background(.ultraThinMaterial, in: Capsule())
         }
     }

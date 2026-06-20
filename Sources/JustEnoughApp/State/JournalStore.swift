@@ -131,7 +131,7 @@ final class JournalStore {
     func acceptRecognition() {
         guard let entry = lastRecognizedEntry else { return }
         append(entry: entry, userText: "photo of my salad", agentText: "Logged Avocado Garden Salad at \(entry.estimate.calories) kcal with \(entry.estimate.macros.protein)g protein.")
-        selectedEntry = entry
+        selectedEntry = nil
         mode = .day
     }
 

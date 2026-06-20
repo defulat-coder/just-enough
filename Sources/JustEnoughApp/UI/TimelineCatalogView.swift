@@ -69,9 +69,15 @@ private struct TimelineMealTile: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            FoodImage(visual: entry.visual)
-                .frame(height: 126)
-                .frame(maxWidth: .infinity)
+            ZStack {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(Color.white.opacity(0.72))
+                    .shadow(color: .black.opacity(0.05), radius: 12, y: 8)
+                FoodImage(visual: entry.visual)
+                    .padding(10)
+            }
+            .frame(height: 138)
+            .frame(maxWidth: .infinity)
             Text(entry.name)
                 .font(.system(size: 16, weight: .semibold, design: .rounded))
                 .lineLimit(2)
