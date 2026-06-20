@@ -35,10 +35,14 @@ final class JournalStore {
         self.visuals = visuals
         self.persistence = persistence
 
-        let snapshot = persistence.load() ?? JournalFixtures.initialSnapshot
+        let shouldReset = ProcessInfo.processInfo.arguments.contains("--reset-journal")
+        let snapshot = shouldReset ? JournalFixtures.initialSnapshot : persistence.load() ?? JournalFixtures.initialSnapshot
         self.days = snapshot.days
         self.memory = snapshot.memory
         self.selectedDayID = snapshot.days.first?.id ?? JournalFixtures.initialSnapshot.days[0].id
+        if shouldReset {
+            persistence.save(snapshot)
+        }
     }
 
     var selectedDay: FoodDay {

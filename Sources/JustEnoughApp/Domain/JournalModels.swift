@@ -109,6 +109,17 @@ struct FoodDay: Identifiable, Codable, Hashable {
         formatter.dateFormat = "MMMM d"
         return formatter.string(from: date).uppercased()
     }
+
+    var pagerTitle: String {
+        switch title {
+        case "Yesterday":
+            return "Yday"
+        case "Wednesday":
+            return "Wed"
+        default:
+            return title
+        }
+    }
 }
 
 struct UserNutritionMemory: Codable, Hashable {
@@ -169,7 +180,7 @@ enum JournalFixtures {
                 ],
                 messages: [
                     AgentMessage(role: .user, text: "pancakes, latte, greens bowl, salmon", createdAt: today),
-                    AgentMessage(role: .agent, text: "Logged a balanced training-day lineup. You are at 1,660 kcal with 70g protein.", createdAt: today)
+                    AgentMessage(role: .agent, text: "Logged a balanced training-day lineup. You are at 1,660 kcal with 72g protein.", createdAt: today)
                 ],
                 summary: "Lovely landing for the day; dinner brought the protein and the color."
             ),

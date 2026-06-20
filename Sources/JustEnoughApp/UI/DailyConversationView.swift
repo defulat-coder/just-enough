@@ -75,23 +75,25 @@ private struct DayPager: View {
             .disabled(!store.canShowPreviousDay)
             .opacity(store.canShowPreviousDay ? 1 : 0.32)
 
-            ForEach(store.days) { day in
-                Button {
-                    store.showDay(day)
-                } label: {
-                    Text(label(for: day))
-                        .font(.system(size: 13, weight: .bold, design: .rounded))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                        .padding(.horizontal, 13)
-                        .frame(height: 36)
-                        .background(day.id == store.selectedDayID ? JustEnoughDesign.ink : .clear, in: Capsule())
-                        .foregroundStyle(day.id == store.selectedDayID ? JustEnoughDesign.pageBackground : JustEnoughDesign.secondaryInk)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(store.days) { day in
+                        Button {
+                            store.showDay(day)
+                        } label: {
+                            Text(day.pagerTitle)
+                                .font(.system(size: 13, weight: .bold, design: .rounded))
+                                .lineLimit(1)
+                                .padding(.horizontal, 13)
+                                .frame(height: 36)
+                                .background(day.id == store.selectedDayID ? JustEnoughDesign.ink : .clear, in: Capsule())
+                                .foregroundStyle(day.id == store.selectedDayID ? JustEnoughDesign.pageBackground : JustEnoughDesign.secondaryInk)
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
-                .buttonStyle(.plain)
             }
-
-            Spacer()
+            .frame(maxWidth: .infinity)
 
             Button(action: store.showNextDay) {
                 Label("Next day", systemImage: "chevron.right")
@@ -103,14 +105,6 @@ private struct DayPager: View {
             .opacity(store.canShowNextDay ? 1 : 0.32)
         }
         .buttonStyle(.plain)
-    }
-
-    private func label(for day: FoodDay) -> String {
-        guard day.title != "Today" else { return "Today" }
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "MMM d"
-        return formatter.string(from: day.date)
     }
 }
 
@@ -149,6 +143,7 @@ private struct InlineMealResults: View {
     var body: some View {
         if !entries.isEmpty {
             VStack(spacing: 10) {
+                AgentToolTrace(entryCount: entries.count)
                 ForEach(entries) { entry in
                     MealRow(entry: entry) {
                         action(entry)
@@ -159,5 +154,27 @@ private struct InlineMealResults: View {
             }
             .transition(.move(edge: .bottom).combined(with: .opacity))
         }
+    }
+}
+
+private struct AgentToolTrace: View {
+    let entryCount: Int
+
+    var body: some View {
+        HStack(spacing: 7) {
+            tracePill("memory")
+            tracePill("nutrition DB")
+            tracePill("\(entryCount) foods")
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func tracePill(_ label: String) -> some View {
+        Text(label)
+            .font(.system(size: 11, weight: .bold, design: .rounded))
+            .foregroundStyle(JustEnoughDesign.secondaryInk)
+            .padding(.horizontal, 9)
+            .frame(height: 25)
+            .background(.ultraThinMaterial, in: Capsule())
     }
 }
